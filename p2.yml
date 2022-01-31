@@ -1,0 +1,22 @@
+- name: Deploying webserver
+  hosts: web
+  gather_facts: false
+  tasks:
+   - name: To create a direcoty name exam
+     file:
+      path: /tmp/exam
+      state: directory
+   - name: To copy file fstab to exam
+     copy:
+      src: /etc/fstab
+      dest: /tmp/exam
+   - name: To start service crontab
+     service:
+      name: crond
+      state: restarted
+   - name: To install httpd & ftp
+     yum:
+      name:
+       - httpd
+       - ftp
+      state: installed
