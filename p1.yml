@@ -1,0 +1,15 @@
+- hosts: web
+  gather_facts: false
+  tasks:
+   - file:
+      path: /tmp/exam
+      state: directory
+   - copy:
+      src: /etc/fstab
+      dest: /tmp/exam
+   - service:
+      name: crond
+      state: restarted
+   - yum:
+      name: httpd
+      state: installed
