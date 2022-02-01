@@ -1,0 +1,29 @@
+- name: Example of condition
+  hosts: all
+  remote_user: ec2-user
+  become: true
+  become_user: root
+  tasks:
+   - name: install httpd
+     yum:
+       name: httpd
+       state: installed
+     when: ansible_distribution == 'RedHat' and ansible_distribution_major_version == '8'
+
+   - name: install vsftpd
+     yum:
+       name: vsftpd
+       state: installed
+     when: ansible_distribution == 'RedHat'
+
+   - name: install ftp
+     yum:
+       name: ftp
+       state: installed
+     when: ansible_distribution == 'RedHat' or 'Centos'
+
+   - name: install wget
+     yum:
+        name: wget
+        state: installed
+     when: ( ansible_distribution == 'RedHat' and ansible_distribution_major_version == '8' ) or ( ansible_distribution == 'Centos' and ansible_distribution_major_version == '7' )

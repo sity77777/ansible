@@ -1,0 +1,20 @@
+- name: Example of condition
+  hosts: all
+  remote_user: ec2-user
+  become: true
+  become_user: root
+  tasks:
+   - name: check file existance
+     stat:
+      path: /tmp/exam.conf
+     register: exam
+
+
+   - debug:
+       var: exam
+
+       #   - name: create file if does not exists
+#     copy:
+#      content: "Hello sir\n"
+#      dest: /tmp/exam.conf
+#     when: exam.stat.exists == false

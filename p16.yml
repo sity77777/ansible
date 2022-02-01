@@ -1,0 +1,19 @@
+- name: Example of condition
+  hosts: all 
+  become: true
+  remote_user: ec2-user
+  become_user: root
+  tasks:
+   - name: check all machine service is run or not
+     command: systemctl is-active crond
+     register: exam
+     ignore_errors: yes
+
+
+   - debug: 
+       var: exam
+   - name: start service if it is not running
+     service:
+       name: crond
+       state: started
+     when: exam.rc != 0
