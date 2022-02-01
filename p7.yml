@@ -1,0 +1,19 @@
+- name: variable
+  hosts: web
+  vars:
+    web_pkg: httpd
+    d_pkg: vsftpd
+    pkg:
+     - httpd
+     - vsftpd
+    webroot: /var/www/html/
+  tasks:
+   - name: install package
+     yum:
+       name: "{{ pkg }}"
+       state: installed
+
+   - name: create diployment path webroot
+     file:
+      path: "{{ webroot }}"
+      state: directory

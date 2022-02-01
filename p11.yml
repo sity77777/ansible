@@ -1,0 +1,12 @@
+- name: create file using inventory file
+  hosts: all
+  remote_user: ec2-user
+  become: true
+  become_user: root
+  tasks:
+   - name: create a file in document root
+     file:
+      path: "{{ web_root }}"
+      state: directory
+   - debug:
+      var: web_root

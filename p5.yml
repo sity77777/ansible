@@ -1,0 +1,28 @@
+- name: 1st play
+  hosts: web
+  remote_user: ec2-user
+  become: true
+  become_user: root
+  gather_facts: false
+  tasks:
+    - name: To create a file
+      file:
+       path: /tmp/exam
+       state: directory
+    - name: To copy file
+      copy:
+       src: /etc/fstab
+       dest: /tmp
+    - name: service start crond
+      service:
+       name: crond
+       state: started
+    - name: To install httpd and vsftpd
+      yum:
+       name:
+        - httpd
+        - ftp
+       state: installed
+
+
+

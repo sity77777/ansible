@@ -1,0 +1,28 @@
+- name: Deploying task
+  hosts: web
+  gather_facts: false
+  tasks:
+    - name: To create a file
+      file:
+       path: /tmp/exam
+       state: directory
+    - name: To copy file
+      copy:
+       src: /etc/fstab
+       dest: /tmp
+    - name: To start service crond
+      service:
+       name: crond
+       state: started
+    - name: To install httpd and vsftpd
+      yum:
+       name:
+        - httpd
+        - ftp
+       state: installed
+    - name: import task of apche
+      include_tasks: /home/ec2-user/playbooks/apache.yml 
+
+
+
+

@@ -1,0 +1,14 @@
+- name: Example Ansible facts
+  hosts: all
+  remote_user: ec2-user
+  become: true
+  become_user: root
+  tasks:
+   - name: store kernal version into /etc/motd file
+     copy:
+      content: "this is your kernam version {{ ansible_kernel }}"
+      dest: /etc/motd
+   - name: append ipaddress and fqdn into /etc/motd
+     lineinfile:
+       line: "{{ ansible_default_ipv4.address }} {{ ansible_fqdn }}"
+       dest: /etc/motd

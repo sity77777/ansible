@@ -1,0 +1,18 @@
+- name: variable
+  hosts: web
+  remote_user: ec2-user
+  become: true
+  become_user: root
+  tasks:
+   - include_vars: /home/ec2-user/playbooks/collection_var.yml
+   - name: install package
+     yum:
+       name: "{{ pkg }}"
+       state: installed
+
+   - name: create diployment path webroot
+     file:
+      path: "{{ webroot }}"
+      state: directory
+   - debug:
+       msg: this is variable list "{{ pkg }}"

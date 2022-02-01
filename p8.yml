@@ -1,0 +1,14 @@
+- name: variable
+  hosts: web
+  vars_files:
+          - /home/ec2-user/playbooks/collection_var.yml
+  tasks:
+   - name: install package
+     yum:
+       name: "{{ pkg }}"
+       state: installed
+
+   - name: create diployment path webroot
+     file:
+      path: "{{ webroot }}"
+      state: directory

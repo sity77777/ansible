@@ -1,0 +1,20 @@
+- name: Example of register variable
+  hosts: all
+  remote_user: ec2-user
+  become: true
+  become_user: root
+  tasks:
+   - name: check hardware mode
+     command: uname -m
+     register: xyz
+
+
+
+   - debug:
+       var: xyz
+
+
+   - name: store hardware mode into /etc/motd
+     copy:
+      content: "{{ xyz }}"
+      dest: /etc/motd
