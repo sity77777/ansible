@@ -1,0 +1,36 @@
+- name: example of notify and handler
+  hosts: all
+  become: true
+  become_user: root
+  remote_user: ec2-user
+  tasks:
+   - name: install httpd
+     yum:
+      name: httpd
+      state: installed
+     notify:
+       - restart_machine
+       - reboot_machine
+       - health_check
+
+  handlers:
+   - name: Reboot
+     command: shutdown -r now
+     async: 1
+     poll: 0
+     listen: restart_machine
+
+   - name: wait 300 secornd and up machine
+     wait_for:
+       port: 22
+       host: "{{ inventory_hostname }}"
+       search_regex: OpenSSH
+       delay: 10
+       timeout: 300
+     delegate_to: localhost
+     listen: reboot_machine
+
+
+   - debug:
+       msg: "Maching up successfully"
+       listen: health_check

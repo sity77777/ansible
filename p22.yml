@@ -1,0 +1,16 @@
+- name: example of notify and handler
+  hosts: all
+  become: true
+  become_user: root
+  remote_user: ec2-user
+  tasks:
+   - block:
+      - name: install mariadb
+        yum:
+          name: mariadb-server
+          state: installed
+      - name: update data in database
+        get_url:
+          url: https://example.com
+          dest: /tmp
+     when: ansible_distribution == 'Redhat'

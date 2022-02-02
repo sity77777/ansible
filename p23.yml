@@ -1,0 +1,13 @@
+- name: example of condition failed_when
+  hosts: all
+  tasks:
+   - name: check sufficient memory
+     debug:
+       msg: "memory is not sufficient"
+     failed_when: ansible_memtoal_mb > 2049
+
+
+   - name: install mariadb
+     yum:
+      name: mariadb-server
+      state: installed

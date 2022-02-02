@@ -1,0 +1,40 @@
+- name: example of simple loop
+  hosts: all
+  become: true
+  become_user: root
+  remote_user: ec2-user
+  tasks:
+   - name: create n number of user
+     user:
+       name: "{{ item }}"
+       state: present
+     with_items:
+         - ram
+         - bulu
+         - raju
+         - rakesh
+   - name: copy n number of /etc/fstab /etc/motd /var/opt
+     copy:
+        src: "{{ item }}"
+        dest: /tmp
+     with_items:
+         - /etc/fstab
+         - /etc/motd
+         - /var/opt
+   - name: install n  number of package httpd ftp vsftpd mariadb
+     yum:
+       name:
+        - httpd
+        - ftp
+        - vsftpd
+        - mariadb-server
+       state: installed
+
+   - name: copy file /etc/fstab in n number of files
+     copy:
+       src: /etc/fstab
+       dest: "{{ item }}"
+     with_items:
+         - /tmp
+         - /var/opt
+         - /tmp/file
