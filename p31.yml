@@ -1,0 +1,14 @@
+- name: example of how to create best practice of ansible vault
+  hosts: all
+  become: true
+  become_method: root
+  remote_user: ec2-user
+  vars_files:
+          - /home/ec2-user/vault/crypt.yml
+  tasks:
+    - name: appy user password
+      user:
+        name: ravi
+        password: "{{ mypass | password_hash('sha512') }}"
+        state: present
+

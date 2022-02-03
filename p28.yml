@@ -1,0 +1,16 @@
+- name: example of list of hash loop
+  hosts: all
+  become: true
+  remote_user: ec2-user
+  become_user: root
+  tasks:
+    - name: add user and appy different password or group
+      user:
+        name: "{{ item.u }}"
+        password: "{{ item.p }}"
+        group: " {{ item.g }}"
+        state: present
+      with_items:
+          - { u: 'ram', p: 'redhat', g: 'cricket' }
+          - { u: 'rakesh', p: 'redhat123', g: 'abc' }
+          - { u: 'luna', p: 'redhat143', g: 'devloper' }

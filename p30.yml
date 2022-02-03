@@ -1,0 +1,22 @@
+- name: example of Nested loop
+  hosts: all
+  become: true
+  become_user: root
+  remote_user: ec2-user
+  vars:
+     myfiles:
+       - /etc/fstab
+       - /etc/passwd
+       - /etc/group
+     mydirs:
+       - /root
+       - /tmp
+       - /opt
+  tasks:
+    - name: copy all files into all directory
+      copy:
+        src: "{{ item[0] }}"
+        dest: "{{ item[1] }}"
+      with_nested:
+          - "{{ myfiles }}"
+          - "{{ mydirs }}"    
