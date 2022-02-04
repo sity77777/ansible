@@ -1,0 +1,17 @@
+- name: example of temple loop II method 2
+  hosts: all
+  become: true
+  become_user: root
+  remote_user: ec2-user
+  tasks:
+   - name: check disk availbal or not
+     stat:
+             path: /dev/xvdb
+     register: disk
+
+
+   - name: copy  1st file
+     template: 
+        src: hwreport.txt
+        dest: /root/hwreport.txt
+

@@ -1,0 +1,16 @@
+- name: Example of write custom veriable call into template
+  hosts: all
+  become: true
+  become_user: root
+  remote_user: ec2-user
+  vars:
+     web_root: /var/www/html
+  tasks:
+    - name: install apache
+      yum:
+              name: httpd
+              state: latest
+    - name: call apache j2 file with using template
+      template:
+              src: apache.j2
+              dest: /etc/httpd/conf.d/apache.conf

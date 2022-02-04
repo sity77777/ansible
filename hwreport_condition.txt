@@ -1,0 +1,10 @@
+Hostname= {{ ansible_hostname }}
+ipaddress= {{ ansible_default_ipv4.address }}
+Total_memory= {{ ansible_memtotal_mb }}
+Bios_version= {{ ansible_bios_version }}
+xvda_size_total= {{ ansible_devices.xvda.size }}
+{% if disk.stat.exists == true %}
+xvda_size_total= {{ ansible_devices.xvda.size }}
+{% else %}
+xvdb_size_total= none
+{% endif %}

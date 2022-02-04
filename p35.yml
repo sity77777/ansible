@@ -1,0 +1,23 @@
+- name: example of temple loop II method 1
+  hosts: all
+  become: true
+  become_user: root
+  remote_user: ec2-user
+  tasks:
+   - name: check disk availbal or not
+     stat:
+             path: /dev/xvdb
+     register: disk
+
+
+   - name: copy  1st file
+     template: 
+        src: hwreport.txt
+        dest: /root/hwreport.txt
+     when: disk.stat.exists == true
+
+   - name: conpy 2nd file
+     template:
+        src: hwreport2.txt
+        dest: /root/hwreport.txt
+     when: disk.stat.exists == false

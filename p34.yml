@@ -1,0 +1,11 @@
+- name: example of jinja loop
+  hosts: all
+  become: true
+  become_user: root
+  remote_user: ec2-user
+  tasks:
+    - name: puch jinja loop file in template
+      template:
+              src: host.j2
+              dest: /etc/myhosts
+      when: inventory_hostname in groups['dev']

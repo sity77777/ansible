@@ -1,0 +1,5 @@
+<Virtualhost {{ ansible_hostname }}:80>
+ServerName {{ ansible_fqdn }}
+Documentroot {{ web_root }}
+Serveradmin root@{{ ansible_fqdn }}
+</Virtualhost>

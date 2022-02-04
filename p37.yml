@@ -1,0 +1,18 @@
+- name: example of temple loop  method 3
+  hosts: all
+  become: true
+  become_user: root
+  remote_user: ec2-user
+  tasks:
+   - block: 
+      - name: when run disk available hwreport.txt file
+        template:
+              src: hwreport.txt
+              dest: /root/hwreport.txt
+
+     rescue:
+      - name: when run disk available hwreport2.txt file
+        template: 
+          src: hwreport2.txt
+          dest: /root/hwreport.txt
+
